@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  web:
+    image: registry.gitlab.com/trongbach/xxx/web_service:v1.0
+    container_name: xxx-web_service
+    restart: unless-stopped
+    volumes:
+      - ./web_service:/app
+    environment:
+       VIRTUAL_HOST: jav.13net.xyz
+       VIRTUAL_PORT: 8888
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+  crawl:
+    image: registry.gitlab.com/trongbach/xxx/crawl_service:v1.0
+    container_name: xxx-crawl_service
+    restart: unless-stopped
+    volumes:
+      - ./crawl_service:/app
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "5"
+        max-size: "10m"
+networks:
+  default:
+    external:
+      name: b_nginx_network
